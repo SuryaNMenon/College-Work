@@ -19,7 +19,7 @@ public class selectiveRepeatClient{
             DataInputStream dis = new DataInputStream(connection.getInputStream());
             DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
             int count = dis.read();
-            System.out.println("Number of packets sent: " + count);
+            System.out.println("Number of frames sent: " + count);
 
             for(int i=0;i<count;i++){
                 v[i] = dis.read();
@@ -29,18 +29,19 @@ public class selectiveRepeatClient{
             value = random.nextInt(count);
             v[value] = -1;
             for(int i = 0; i<count; i++){
-                System.out.println("Packet received: "+v[i]);
+                System.out.println("Frame received: "+v[i]);
             }
-            for(int i=0;i<v.length;i++)
+            for(int i=0;i<v.length;i++){
                 if(v[i] == -1){
-                    System.out.println("Requesting retransmission for packet number "+(i+1));
+                    System.out.println("Requesting retransmission for frame number "+(i+1));
                     n = i;
                     dos.write(n);
                     dos.flush();
                 }
-                System.out.println();
-                v[n] = dis.read();
-                System.out.println("Retransmitted packet is: "+v[n]);
+            }
+            System.out.println();
+            v[n] = dis.read();
+            System.out.println("Retransmitted frame is: "+v[n]);
             System.out.println("Data Transfer Complete - Terminating!");
         }catch(Exception e){System.out.println(e);}
     }

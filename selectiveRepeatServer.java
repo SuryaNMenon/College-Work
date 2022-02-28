@@ -17,7 +17,7 @@ public class selectiveRepeatServer{
             Socket client = server.accept();
             DataInputStream dis = new DataInputStream(client.getInputStream());
             DataOutputStream dos = new DataOutputStream(client.getOutputStream());
-            System.out.println("Number of packets sent is: "+ a.length);
+            System.out.println("Number of frames sent is: "+ a.length);
             dos.write(a.length);
             dos.flush();
 
