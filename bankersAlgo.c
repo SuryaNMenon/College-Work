@@ -46,7 +46,7 @@ int main(){
                 }
                 if(flag == 0){
                     deadlockFlags[i] = 1;
-                    safeSequence[index] = 1;
+                    safeSequence[index] = i;
                     index++;
                     for(int x = 0; x<resource; x++){
                         available[x] += allocated[i][x];
