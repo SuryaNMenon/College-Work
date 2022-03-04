@@ -55,8 +55,8 @@ void main(){
             printf("Process needs to wait for memory to be free");
         }
     }
+    printf("\nBlock\tAllocated?\tProcess Allocated\tBlock Size\tProcess Size\tFragment remaining");
     for(int i = 0; i<blkCount; i++){
-        printf("\nBlock\tAllocated?\tProcess Allocated\tBlock Size\tProcess Size\tFragment remaining");
         printf("\n%d\t%d\t%d\t%d\t%d\t%d\n", i, block[i].isallocated, block[i].pallocated, block[i].size, prcList[block[i].pallocated], block[i].frag);
     }
 }
