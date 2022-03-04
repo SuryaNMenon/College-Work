@@ -52,7 +52,7 @@ void main(){
             block[best].frag = block[best].size - prcList[j];
             }
         else{
-            printf("Process needs to wait for memory to be free");
+            printf("Process %d needs to wait for memory to be free\n");
         }
     }
     printf("\nBlock\tAllocated?\tProcess Allocated\tBlock Size\tProcess Size\tFragment remaining\n");
