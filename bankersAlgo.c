@@ -16,7 +16,7 @@ int main(){
 
     printf("Enter maximum resource needs");
     for(int i=0; i<process;i++){
-        for(int j=0;j<process;j++){
+        for(int j=0;j<resource;j++){
             scanf("%d", &maxNeed[i][j]);
         }
     } 
@@ -38,18 +38,21 @@ int main(){
 
     for(int k=0; k<process; k++){
         for(int i=0; i<process;i++){
-            int flag = 0;
-            for(int j=0;j<resource;j++){
-                if(needMatrix[i][j] > available[j]){
-                    flag = 1;
-                    break;
-                }
-                if(flag == 0){
-                    deadlockFlags[i] = 1;
-                    safeSequence[index] = i;
-                    index++;
-                    for(int x = 0; x<resource; x++){
-                        available[x] += allocated[i][x];
+            if(deadlockFlags[i] == 0)
+            {
+                int flag = 0;
+                    for(int j=0;j<resource;j++){
+                        if(needMatrix[i][j] > available[j]){
+                            flag = 1;
+                            break;
+                        }
+                    if(flag == 0){
+                        deadlockFlags[i] = 1;
+                        safeSequence[index] = i;
+                        index++;
+                        for(int x = 0; x<resource; x++){
+                            available[x] += allocated[i][x];
+                        }
                     }
                 }
             }
