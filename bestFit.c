@@ -46,7 +46,7 @@ void main(){
         }
 
         if(best != -1){
-            printf("\nProcess %d allocated to block %d", j, best);
+            printf("\nProcess %d allocated to block %d\n", j, best);
             block[best].isallocated = 1;
             block[best].pallocated = j;
             block[best].frag = block[best].size - prcList[j];
@@ -55,8 +55,8 @@ void main(){
             printf("Process needs to wait for memory to be free");
         }
     }
-    printf("\nBlock\tAllocated?\tProcess Allocated\tBlock Size\tProcess Size\tFragment remaining");
+    printf("\nBlock\tAllocated?\tProcess Allocated\tBlock Size\tProcess Size\tFragment remaining\n");
     for(int i = 0; i<blkCount; i++){
-        printf("\n%d\t%d\t%d\t%d\t%d\t%d\n", i, block[i].isallocated, block[i].pallocated, block[i].size, prcList[block[i].pallocated], block[i].frag);
+        printf("%d\t%d\t%d\t%d\t%d\t%d\n", i, block[i].isallocated, block[i].pallocated, block[i].size, prcList[block[i].pallocated], block[i].frag);
     }
 }
