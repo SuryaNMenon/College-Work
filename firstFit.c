@@ -44,7 +44,7 @@ void main(){
             }
         }
     }
-    printf("\nBlock\tIsallocated\tProcess_allocated\tBlockSize\tPSize\tFragment\n");
+    printf("\nBlock\tAllocated?\tProcess Allocated\tBlock Size\tProcess Size\tFragment remaining\n");
     for(int i = 0; i < blkCount; i++)
 	{
 		printf("  %d \t    %d     \t        %d       \t  %d     \t  %d \t   %d   \n",i, block[i].isallocated,  block[i].pallocated, block[i].size, prcList[block[i].pallocated], block[i].frag);
