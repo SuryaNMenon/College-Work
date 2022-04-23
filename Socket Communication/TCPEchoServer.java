@@ -15,9 +15,7 @@ public class TCPEchoServer{
             System.out.println("Unable to open Port");
             System.exit(1);
         }
-        do{
-            clientInteract();
-        }while(true);
+        clientInteract();
     }
     private static void clientInteract() {
         Socket link = null;
