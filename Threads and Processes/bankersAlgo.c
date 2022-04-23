@@ -17,7 +17,7 @@ void main(){
     printf("Enter maximum resource needs\n");
     for(int i = 0; i<process; i++){
         for(int j= 0; j<resource;j++){
-            scanf("%d", &maxNeed[process][resource]);
+            scanf("%d", &maxNeed[i][j]);
         }
     }
 
@@ -28,7 +28,7 @@ void main(){
 
     for(int i=0; i<process; i++){
         for(int j = 0; j<resource; j++){
-            maxNeed[i][j] = maxNeed[i][j] - allocated[i][j];
+            needMatrix[i][j] = maxNeed[i][j] - allocated[i][j];
         }
     }
 
