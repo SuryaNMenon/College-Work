@@ -1,56 +1,85 @@
 #include<stdio.h>
-#define MAX 30
+#define max 10
 
-int main(){
-    int size, proclist[MAX], bTime[MAX], priority[MAX],
-    waitingTime[MAX], turnaroundTime[MAX];
-    float avgWait = 0.0, avgTurnaround = 0.0;
-    printf("Enter number of processes: ");
+void main(){
+    int proclist[max], btime[max], atime[max], priority[max], waittime[max], turnaround[max], comptime[max];
+    int exectime;
+    float avgwait = 0.0, avgtat = 0.0;
+
+    int size;
+    printf("Number of processes: ");
     scanf("%d", &size);
-    printf("Enter process details\n");
-    for(int i = 0;i<size;i++){
+    for(int i=0;i<size;i++){
         printf("Process ID: ");
         scanf("%d", &proclist[i]);
-        
-        printf("Burst time: ");
-        scanf("%d", &bTime[i]);
+
+        printf("Burst: ");
+        scanf("%d", &btime[i]);
+
+        printf("Arrival: ");
+        scanf("%d", &atime[i]);
 
         printf("Priority: ");
         scanf("%d", &priority[i]);
     }
-    int temp = 0;
-    for(int i=0;i<size;i++){
-        for(int j=0;j<size-1-i;j++){
-            if(priority[j]<priority[j+1]){
-                temp = priority[j];
-                priority[j] = priority[j+1];
-                priority[j+1] = temp;
+    int temp;
+    for(int i=0;i<size-1;i++){
+        for(int j=i+1; j<size; j++){
+            if(atime[i] > atime[j]){
+                temp = proclist[i];
+                proclist[i] = proclist[j];
+                proclist[j] = temp;
 
-                temp = bTime[j];
-                bTime[j] = bTime[j+1];
-                bTime[j+1] = temp;
+                temp = btime[i];
+                btime[i] = btime[j];
+                btime[j] = temp;
 
-                temp = proclist[j];
-                proclist[j] = proclist[j+1];
-                proclist[j+1] = temp;
+                temp = atime[i];
+                atime[i] = atime[j];
+                atime[j] = temp;
+
+                temp = priority[i];
+                priority[i] = priority[j];
+                priority[j] = temp;
             }
         }
     }
-    printf("PID\tPriority\tBurst Time\tWaiting Time\tTurnaround Time\n");
-    for(int i = 0;i<size;i++){
-        waitingTime[i] = 0;
-        for(int j = 0; j<i; j++){
-            waitingTime[i] += bTime[j];
-        }
-        turnaroundTime[i] = waitingTime[i] + bTime[i];
-        avgWait += waitingTime[i];
-        avgTurnaround += turnaroundTime[i];
-        printf("%d\t\t%d\t\t%d\t\t%d\t%d\n",proclist[i],priority[i],bTime[i],waitingTime[i],turnaroundTime[i]);
-    }
 
-    avgWait /= size;
-    avgTurnaround /= size;
-    printf("Average Wait: %f\n", avgWait);
-    printf("Average Turnaround: %f", avgTurnaround);
-    return 0;
+    waittime[0] = 0;
+    turnaround[0] = waittime[0] + btime[0];
+    comptime[0] = btime[0];
+
+    for(int i=1; i<size; i++){
+        exectime = comptime[i-1];
+        for(int j=i; j<size; j++){
+            if(exectime >= atime[j] && priority[j] < priority[i]){
+                temp = proclist[i];
+                proclist[i] = proclist[j];
+                proclist[j] = temp;
+
+                temp = btime[i];
+                btime[i] = btime[j];
+                btime[j] = temp;
+
+                temp = atime[i];
+                atime[i] = atime[j];
+                atime[j] = temp;
+
+                temp = priority[i];
+                priority[i] = priority[j];
+                priority[j] = temp;
+            }
+        }
+        waittime[i] = comptime[i-1] - atime[i];
+        turnaround[i] = waittime[i] + btime[i];
+        comptime[i] = comptime[i-1] + btime[i];
+        avgwait += waittime[i];
+        avgtat += turnaround[i];
+    }
+    printf("\nPID\tBurst\tArrival\tPriority\tWait\tTurnaround\tCompletion\n");
+    for(int i=0;i<size;i++){
+        printf("%d\t%d\t%d\t%d\t\t%d\t\t%d\t\t%d\n", proclist[i], btime[i], atime[i], priority[i], waittime[i], turnaround[i], comptime[i]);
+    }
+    printf("Avg Wait: %f", (avgwait/size));
+    printf("Avg TAT: %f", (avgtat/size));
 }
